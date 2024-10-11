@@ -29,6 +29,11 @@ ui <- fluidPage(
       style = "text-align: left; margin-top: 10px;",
       "Data available at ", 
       tags$a(href = "https://www.pa.gov/en/agencies/vote/elections/elections-data.html", "Pennsylvania Agency of Voting & Elections", target = "_blank")
+    ),
+    tags$div(
+      style = "text-align: left; margin-top: 10px;",
+      "Website created by ", 
+      tags$a(href = "https://jwestreich.github.io/Jays-Portfolio/", "Jay Westreich", target = "_blank")
     )
   )
 )
