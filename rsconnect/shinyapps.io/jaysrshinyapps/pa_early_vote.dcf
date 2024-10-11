@@ -1,0 +1,13 @@
+name: pa_early_vote
+title: pa_early_vote
+username: jaysrshinyapps
+account: jaysrshinyapps
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12986893
+bundleId: 9209009
+url: https://jaysrshinyapps.shinyapps.io/pa_early_vote/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data.csv
