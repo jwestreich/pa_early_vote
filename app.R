@@ -43,7 +43,7 @@ server <- function(input, output) {
       geom_line(aes(y = firewall_target), color = "black", linetype = "dashed", size = 1.5) +
       scale_y_continuous(limits = c(0, 500000), breaks = seq(0, 500000, 100000), labels = scales::comma) +
       labs(x = "Date", y = "Harris Firewall") +
-      annotate("text", x = max(df$date) - 4, y = 420000, label = "Firewall Needed to Feel\nDecent on ED: 390,000", hjust = 1, size = 5) +
+      annotate("text", x = min(df$date)+10, y = 420000, label = "Firewall Needed to Feel\nDecent on ED: 390,000", hjust = 0, size = 5) +
       theme_classic() +
       theme(legend.position = "none",
             axis.text.x = element_text(color = "black", size = 12),
