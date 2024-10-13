@@ -1,11 +1,13 @@
 library(shiny)
 library(readr)
 library(dplyr)
+library(tidyr)
+library(tidyverse)
 library(lubridate)
 library(ggplot2)
 library(plotly)
 
-df <- read_csv("https://raw.githubusercontent.com/jwestreich/pa_early_vote/main/data.csv") %>%
+df <- read_csv("https://raw.githubusercontent.com/jwestreich/pa_early_vote/refs/heads/main/data.csv") %>%
   mutate(date = mdy(date)) %>%
   mutate(votes_total = votes_d + votes_r + votes_i) %>%
   mutate(split_d = votes_d / votes_total,
@@ -14,8 +16,7 @@ df <- read_csv("https://raw.githubusercontent.com/jwestreich/pa_early_vote/main/
   mutate(edge_d = returned_d - returned_r) %>%
   mutate(firewall = votes_d - votes_r) %>%
   mutate(firewall_label = format(firewall, big.mark = ","),
-         edge_d_label = paste0(edge_d * 100, "%"))%>%
-  filter(date<=Sys.Date())
+         edge_d_label = paste0(edge_d * 100, "%"))
 
 df_long <- df %>%
   pivot_longer(cols = c(split_d, split_r, split_i), names_to = "party", values_to = "value")%>%
@@ -28,9 +29,15 @@ df_long <- df %>%
 ui <- fluidPage(
   titlePanel("Pennsylvania Early Voting Tracker"),
   mainPanel(
+    tags$h3("Dem Firewall Tracker"),
     plotlyOutput("firewallPlot", height = "600px"),
+    
+    tags$h3("Dem Return Rate Edge Tracker"),
     plotlyOutput("edgedPlot", height = "600px"),
+    
+    tags$h3("Vote By Mail Split Tracker"),
     plotOutput("vbmSplitPlot", height = "600px"),  # New plot added
+    
     tags$div(
       style = "text-align: left; margin-top: 20px;",
       "Thank you to ", 
@@ -92,17 +99,18 @@ server <- function(input, output) {
       scale_y_continuous(labels = scales::percent_format()) +
       scale_fill_manual(values = c("Republican" = "lightcoral", "Independent" = "lightgray", "Democrat" = "lightblue")) +
       geom_text(aes(label = scales::percent(vbm_split, accuracy = 0.1)), 
-                position = position_fill(vjust = 0.5), size = 5) +
+                position = position_fill(vjust = 0.5), size = 5)+
+      scale_x_date(date_labels = "%b %d", breaks = df_long$date) +
       labs(x = "Date", y = "Vote By Mail Split", fill = "Party") +
       theme_classic() +
-      theme(axis.text.x = element_text(color = "black", size = 12),
-            axis.text.y = element_text(color = "black", size = 12),
-            axis.title.x = element_text(size = 14),
-            axis.title.y = element_text(size = 14))
+      theme(axis.text.x = element_text(color = "black", size = 16),
+            axis.text.y = element_text(color = "black", size = 16),
+            axis.title.x = element_text(size = 20),
+            axis.title.y = element_text(size = 20),
+            legend.text = element_text(size = 16), 
+            legend.title = element_text(size = 18))
+    
   })
 }
-
-shinyApp(ui = ui, server = server)
-
 
 shinyApp(ui = ui, server = server)
