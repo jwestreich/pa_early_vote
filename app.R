@@ -117,8 +117,8 @@ server <- function(input, output) {
             axis.text.y = element_text(color = "black", size = 12),
             axis.title.x = element_text(size = 14),
             axis.title.y = element_text(size = 14),
-            legend.text = element_text(size = 16), 
-            legend.title = element_text(size = 18))
+            legend.text = element_text(size = 12), 
+            legend.title = element_text(size = 14))
     
     ggplotly(p3, tooltip = "text")
   })
