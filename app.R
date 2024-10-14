@@ -68,7 +68,7 @@ server <- function(input, output) {
   output$firewallPlot <- renderPlotly({
     p1 <- ggplot(data = df, aes(x = date)) +
       geom_bar(aes(y = firewall), stat = "identity", fill = "blue", width = .9) +
-      geom_bar(aes(y = firewall, text = paste("Date:", date, "<br>Firewall:", firewall_label)), 
+      geom_bar(aes(y = firewall, text = paste("Date:", format(date, "%b %d"), "<br>Firewall:", firewall_label)), 
                stat = "identity", fill = "blue", width = .9) +
       geom_line(aes(y = firewall_target), color = "black", linetype = "dashed", size = 1.5) +
       scale_y_continuous(limits = c(0, 500000), breaks = seq(0, 500000, 100000), labels = scales::comma) +
@@ -87,7 +87,10 @@ server <- function(input, output) {
   output$edgedPlot <- renderPlotly({
     p2 <- ggplot(data = df, aes(x = date)) +
       geom_line(aes(y = edge_d), color = "orange", size = 1.5) +
-      geom_line(aes(y = edge_d, text = paste("Date:", date, "<br>D Return Edge:", scales::percent(edge_d, accuracy = 0.1))), 
+      geom_line(aes(y = edge_d, text = paste("Date:", format(date, "%b %d"), 
+                                             "<br>D Return Rate: ", scales::percent(returned_d, accuracy = 0.1),
+                                             "<br>R Return Rate: ", scales::percent(returned_r, accuracy = 0.1),
+                                             "<br>D Return Edge:", scales::percent(edge_d, accuracy = 0.1))), 
                 color = "orange", size = 1.5) +
       scale_y_continuous(limits = c(0, 0.2), breaks = seq(0, 0.2, 0.05), labels = scales::percent) +
       labs(x = "Date", y = "D Return Rate Edge") +
@@ -113,7 +116,7 @@ server <- function(input, output) {
       scale_x_date(date_labels = "%b %d") +
       labs(x = "Date", y = "Vote By Mail Split", fill = "Party") +
       theme_classic() +
-      theme(axis.text.x = element_text(color = "black", size = 12),
+      theme(axis.text.x = element_text(color = "black", size = 10),
             axis.text.y = element_text(color = "black", size = 12),
             axis.title.x = element_text(size = 14),
             axis.title.y = element_text(size = 14),
