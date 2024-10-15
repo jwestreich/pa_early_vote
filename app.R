@@ -90,7 +90,7 @@ server <- function(input, output) {
       geom_line(aes(y = edge_d, text = paste("Date:", format(date, "%b %d"), 
                                              "<br>D Return Rate: ", scales::percent(returned_d, accuracy = 0.1),
                                              "<br>R Return Rate: ", scales::percent(returned_r, accuracy = 0.1),
-                                             "<br>D Return Edge:", scales::percent(edge_d, accuracy = 0.1))), 
+                                             "<br>D Return Edge: ", scales::percent(edge_d, accuracy = 0.1))), 
                 color = "orange", size = 1.5) +
       scale_y_continuous(limits = c(0, 0.2), breaks = seq(0, 0.2, 0.05), labels = scales::percent) +
       labs(x = "Date", y = "D Return Rate Edge") +
