@@ -32,7 +32,7 @@ df_long <- df %>%
   mutate(split=ifelse(is.na(split),.00000000000000001,split))
 
 ui <- fluidPage(
-  titlePanel("Pennsylvania Early Voting Tracker"),
+  titlePanel("Pennsylvania Early Vote Tracker"),
   mainPanel(
     tags$h3("Dem Firewall Tracker"),
     tags$h4("How many more votes have been returned from Democrats than Republicans"),
