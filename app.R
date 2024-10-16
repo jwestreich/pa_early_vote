@@ -36,20 +36,28 @@ ui <- fluidPage(
   titlePanel("Pennsylvania Early Vote Tracker"),
   mainPanel(
     tags$h3("Democrat Advantage Tracker"),
-    tags$h4("How many more votes have been returned from Democrats than Republicans"),
+    tags$h4("How many more votes have been cast from Democrats than Republicans"),
     plotlyOutput("firewallPlot", height = "600px"),
+    
+    tags$h3("Create your own Democrat early vote firewall"),
+    tags$h4(HTML("What advantage would Democrats need from early votes to secure a win on Election Day?")),
+    sliderInput("total_turnout", "What do you think the total turnout will be?", min = 5000000, max = 10000000, value = 6700000),
+    sliderInput("early_voters_pct", "What percent of total turnout do you think will be from early votes?", min = 0, max = 100, value = 25, post = "%"),
+    sliderInput("dem_election_day_pct", "What percent of in-person votes do you think will be won by Democrats?", min = 0, max = 100, value = 40, post = "%"),
+    
+    tags$h3(HTML(paste0("In those conditions, Democrats will need an advantage of", textOutput("firewall_needed"), " early votes to secure a win on Election Day")), style = "font-size: 24px;"),
     
     tags$h3("Early Vote Party Split Tracker"),
     selectInput("toggleView", "Select View", choices = c("100% stack" = "stack", "Raw vote count" = "raw")),
     
     conditionalPanel(
       condition = "input.toggleView == 'stack'",
-      plotlyOutput("vbmSplitStackPlot", height = "600px", width = "1500px")
+      plotlyOutput("vbmSplitStackPlot", height = "600px")
     ),
     
     conditionalPanel(
       condition = "input.toggleView == 'raw'",
-      plotlyOutput("vbmSplitBarPlot", height = "600px", width = "1500px")
+      plotlyOutput("vbmSplitBarPlot", height = "600px")
     ),
     
     tags$h3("Dem Return Rate Edge Tracker"),
@@ -98,6 +106,19 @@ server <- function(input, output) {
     
     ggplotly(p1, tooltip = c("text"))
   })
+  
+  output$firewall_needed <- renderText({
+    total_turnout <- input$total_turnout
+    early_voters_pct <- input$early_voters_pct / 100
+    dem_election_day_pct <- input$dem_election_day_pct / 100
+    
+    firewall_needed <- total_turnout * (1 - early_voters_pct) * (1 - 2 * dem_election_day_pct)
+    
+    paste(scales::comma(firewall_needed))
+  })
+  
+  textOutput("firewall_needed")
+  
   
   output$vbmSplitStackPlot <- renderPlotly({
     p2.1 <- ggplot(df_long, aes(x = date, y = split, fill = party, 
@@ -171,7 +192,4 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 
 
-ggplot(df_long, aes(x = date, y = votes, fill = party)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Date", y = "Votes", fill = "Party") +
-  theme_minimal()
+#total_turnout * (1 - early_voters_pct) * (1 - 2 * dem_election_day_pct) = early vote firewall needed
