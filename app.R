@@ -40,10 +40,10 @@ ui <- fluidPage(
     plotlyOutput("firewallPlot", height = "600px"),
     
     tags$h3("Create your own Democrat early vote firewall"),
-    tags$h4(HTML("What advantage would Democrats need from early votes to secure a win on Election Day?")),
+    tags$h4(HTML("What advantage would Democrats need from early/absentee votes to secure a win on Election Day?")),
     sliderInput("total_turnout", "What do you think the total turnout will be?", min = 5000000, max = 10000000, value = 6700000),
-    sliderInput("early_voters_pct", "What percent of total turnout do you think will be from early votes?", min = 0, max = 100, value = 25, post = "%"),
-    sliderInput("dem_election_day_pct", "What percent of in-person votes do you think will be won by Democrats?", min = 0, max = 100, value = 40, post = "%"),
+    sliderInput("early_voters_pct", "What percent of total turnout do you think will be from early/absentee votes?", min = 0, max = 100, value = 25, post = "%"),
+    sliderInput("dem_election_day_pct", "What percent of votes cast in person on Election Day do you think will be won by Democrats?", min = 0, max = 100, value = 40, post = "%"),
     
     tags$h3(HTML(paste0("In those conditions, Democrats will need an advantage of", textOutput("firewall_needed"), " early votes to secure a win on Election Day")), style = "font-size: 24px;"),
     
