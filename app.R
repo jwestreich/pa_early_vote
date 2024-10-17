@@ -45,7 +45,7 @@ ui <- fluidPage(
     sliderInput("early_voters_pct", "What percent of total turnout do you think will be from early/absentee votes?", min = 0, max = 100, value = 25, post = "%"),
     sliderInput("dem_election_day_pct", "What percent of votes cast in person on Election Day do you think will be won by Democrats?", min = 0, max = 100, value = 40, post = "%"),
     
-    tags$h3(HTML(paste0("In those conditions, Democrats will need an advantage of", textOutput("firewall_needed"), " early votes to secure a win on Election Day")), style = "font-size: 24px;"),
+    tags$h3(HTML(paste0("In those conditions, Democrats will need an advantage of", textOutput("firewall_needed"), " early and absentee votes to secure a win on Election Day")), style = "font-size: 24px;"),
     
     tags$h3("Early Vote Party Split Tracker"),
     selectInput("toggleView", "Select View", choices = c("100% stack" = "stack", "Raw vote count" = "raw")),
