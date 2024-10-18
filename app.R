@@ -10,6 +10,7 @@ library(ggplot2)
 library(plotly)
 library(ggiraph)
 library(sf)
+library(tigris)
 options(scipen=999)
 
 df <- read_csv("https://raw.githubusercontent.com/jwestreich/pa_early_vote/refs/heads/main/data.csv") %>%

@@ -5,9 +5,9 @@ account: jaysrshinyapps
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12986893
-bundleId: 9235763
+bundleId: 9238571
 url: https://jaysrshinyapps.shinyapps.io/pa_early_vote/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: data.csv
+ignoredFiles: data.csv|maps.R|temp_report1.xls|temp_report2.xlsx
