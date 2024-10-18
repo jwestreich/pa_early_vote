@@ -36,7 +36,7 @@ df_long <- df %>%
   select(date, party, split, votes)%>%
   mutate(split=ifelse(is.na(split),.00000000000000001,split))
 
-source("C:/Users/jwest/github/pa_early_vote/maps.R")
+source("https://raw.githubusercontent.com/jwestreich/pa_early_vote/refs/heads/main/maps.R")
 
 ui <- fluidPage(
   titlePanel("Pennsylvania Early Vote Tracker"),
