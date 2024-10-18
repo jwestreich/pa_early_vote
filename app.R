@@ -37,7 +37,7 @@ df_long <- df %>%
   select(date, party, split, votes)%>%
   mutate(split=ifelse(is.na(split),.00000000000000001,split))
 
-source("https://raw.githubusercontent.com/jwestreich/pa_early_vote/refs/heads/main/maps.R")
+# source("https://raw.githubusercontent.com/jwestreich/pa_early_vote/refs/heads/main/maps.R")
 
 ui <- fluidPage(
   titlePanel("Pennsylvania Early Vote Tracker"),
@@ -72,55 +72,55 @@ ui <- fluidPage(
     tags$h5("Ballot return rate = number of ballots sent in divided by number of ballots requested"),
     plotlyOutput("edgedPlot", height = "600px"),
     
-    tags$h3("Maps"),
-    selectInput("mapToggleView", "Select Map", 
-                choices = c("Party Split" = "splitPlot", 
-                            "Democrat Firewall" = "demAdvPlot", 
-                            "Registered Voters" = "totalVoterPlot", 
-                            "Early Vote Percent" = "evPlot", 
-                            "Overall Return Rate" = "returnRatePlot", 
-                            "Democrat Return Rate" = "returnRateDPlot", 
-                            "Republican Return Rate" = "returnRateRPlot", 
-                            "Democrat Return Rate Edge" = "returnRateAdvPlot")),
-    conditionalPanel(
-      condition = "input.mapToggleView == 'splitPlot'",
-      div(style = "width: 80%;", girafeOutput("splitPlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'demAdvPlot'",
-      div(style = "width: 80%;", girafeOutput("demAdvPlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'totalVoterPlot'",
-      div(style = "width: 80%;", girafeOutput("totalVoterPlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'evPlot'",
-      div(style = "width: 80%;", girafeOutput("evPlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'returnRatePlot'",
-      div(style = "width: 80%;", girafeOutput("returnRatePlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'returnRateDPlot'",
-      div(style = "width: 80%;", girafeOutput("returnRateDPlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'returnRateRPlot'",
-      div(style = "width: 80%;", girafeOutput("returnRateRPlot"))
-    ),
-    
-    conditionalPanel(
-      condition = "input.mapToggleView == 'returnRateAdvPlot'",
-      div(style = "width: 80%;", girafeOutput("returnRateAdvPlot"))
-    ),    
+    # tags$h3("Maps"),
+    # selectInput("mapToggleView", "Select Map", 
+    #             choices = c("Party Split" = "splitPlot", 
+    #                         "Democrat Firewall" = "demAdvPlot", 
+    #                         "Registered Voters" = "totalVoterPlot", 
+    #                         "Early Vote Percent" = "evPlot", 
+    #                         "Overall Return Rate" = "returnRatePlot", 
+    #                         "Democrat Return Rate" = "returnRateDPlot", 
+    #                         "Republican Return Rate" = "returnRateRPlot", 
+    #                         "Democrat Return Rate Edge" = "returnRateAdvPlot")),
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'splitPlot'",
+    #   div(style = "width: 80%;", girafeOutput("splitPlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'demAdvPlot'",
+    #   div(style = "width: 80%;", girafeOutput("demAdvPlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'totalVoterPlot'",
+    #   div(style = "width: 80%;", girafeOutput("totalVoterPlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'evPlot'",
+    #   div(style = "width: 80%;", girafeOutput("evPlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'returnRatePlot'",
+    #   div(style = "width: 80%;", girafeOutput("returnRatePlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'returnRateDPlot'",
+    #   div(style = "width: 80%;", girafeOutput("returnRateDPlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'returnRateRPlot'",
+    #   div(style = "width: 80%;", girafeOutput("returnRateRPlot"))
+    # ),
+    # 
+    # conditionalPanel(
+    #   condition = "input.mapToggleView == 'returnRateAdvPlot'",
+    #   div(style = "width: 80%;", girafeOutput("returnRateAdvPlot"))
+    # ),    
     
     
     
@@ -152,7 +152,8 @@ server <- function(input, output) {
       geom_bar(aes(y = firewall, text = paste("Date:", format(date, "%b %d"), 
                                               "<br>Dem Votes: ", scales::comma(votes_d),
                                               "<br>Rep Votes: ", scales::comma(votes_r),
-                                              "<br>D Advantage:", scales::comma(firewall, accuracy = 1))), 
+                                              "<br>D Advantage:", scales::comma(firewall),
+                                              "<br>D Advantage 1-day Change: ", scales::comma(firewall-lag(firewall)))), 
                stat = "identity", fill = "blue", width = .9) +
       # geom_line(aes(y = firewall_target), color = "black", linetype = "dashed", size = 1.5) +
       scale_y_continuous(limits = c(0, 500000), breaks = seq(0, 500000, 100000), labels = scales::comma) +
@@ -246,53 +247,53 @@ server <- function(input, output) {
     ggplotly(p3, tooltip = c("text"))
   })
   
-  output$splitPlot <- renderGirafe({
-    girafe(ggobj = splitPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-  
-  output$demAdvPlot <- renderGirafe({
-    girafe(ggobj = demAdvPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-  
-  output$totalVoterPlot <- renderGirafe({
-    girafe(ggobj = totalVoterPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-  
-  output$evPlot <- renderGirafe({
-    girafe(ggobj = evPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-
-  output$returnRatePlot <- renderGirafe({
-    girafe(ggobj = returnRatePlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-  
-  output$returnRateDPlot <- renderGirafe({
-    girafe(ggobj = returnRateDPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-  
-  output$returnRateRPlot <- renderGirafe({
-    girafe(ggobj = returnRateRPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
-  
-  output$returnRateAdvPlot <- renderGirafe({
-    girafe(ggobj = returnRateAdvPlot, options = list(
-      opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-    ))
-  })
+  # output$splitPlot <- renderGirafe({
+  #   girafe(ggobj = splitPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$demAdvPlot <- renderGirafe({
+  #   girafe(ggobj = demAdvPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$totalVoterPlot <- renderGirafe({
+  #   girafe(ggobj = totalVoterPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$evPlot <- renderGirafe({
+  #   girafe(ggobj = evPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$returnRatePlot <- renderGirafe({
+  #   girafe(ggobj = returnRatePlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$returnRateDPlot <- renderGirafe({
+  #   girafe(ggobj = returnRateDPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$returnRateRPlot <- renderGirafe({
+  #   girafe(ggobj = returnRateRPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
+  # 
+  # output$returnRateAdvPlot <- renderGirafe({
+  #   girafe(ggobj = returnRateAdvPlot, options = list(
+  #     opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+  #   ))
+  # })
     
   
 }
