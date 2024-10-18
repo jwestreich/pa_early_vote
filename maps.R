@@ -55,11 +55,13 @@ splitPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient2(low = "red", mid = "white", high = "#009bda", midpoint = 0.5, name = "Dem Adv")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Party Split")
 
-girafe(ggobj = splitPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = splitPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 
 
@@ -74,11 +76,13 @@ demAdvPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient2(low = "red", mid = "white", high = "#009bda", midpoint = 0, name = "Dem Adv")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Democrat Advantage")
 
-girafe(ggobj = demAdvPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = demAdvPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 totalVoterPlot <- ggplot() +
   geom_sf_interactive(data = map_data, aes(geometry = geometry,
@@ -90,11 +94,13 @@ totalVoterPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient(low = "yellow", high = "#9139fe", name = "Number of Registered Voters")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Registered Voters")
 
-girafe(ggobj = totalVoterPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = totalVoterPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 evPlot <- ggplot() +
   geom_sf_interactive(data = map_data, aes(geometry = geometry,
@@ -106,11 +112,13 @@ evPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient(low = "white", high = "green", name = "Number of Registered Voters")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Early Votes Returned\nOut of Registered Voters")
 
-girafe(ggobj = evPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = evPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 returnRatePlot <- ggplot() +
   geom_sf_interactive(data = map_data, aes(geometry = geometry,
@@ -122,11 +130,13 @@ returnRatePlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient(low = "white", high = "orange", name = "Number of Registered Voters")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Return Rate")
 
-girafe(ggobj = returnRatePlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = returnRatePlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 returnRateDPlot <- ggplot() +
   geom_sf_interactive(data = map_data, aes(geometry = geometry,
@@ -138,11 +148,13 @@ returnRateDPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient(low = "white", high = "#009bda", name = "Number of Registered Voters")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Democrat Return Rate")
 
-girafe(ggobj = returnRateDPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = returnRateDPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 returnRateRPlot <- ggplot() +
   geom_sf_interactive(data = map_data, aes(geometry = geometry,
@@ -154,11 +166,13 @@ returnRateRPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient(low = "white", high = "red", name = "Number of Registered Voters")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Republican Return Rate")
 
-girafe(ggobj = returnRateRPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = returnRateRPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
 
 returnRateAdvPlot <- ggplot() +
   geom_sf_interactive(data = map_data, aes(geometry = geometry,
@@ -170,8 +184,10 @@ returnRateAdvPlot <- ggplot() +
                       color = "black", size = 0.2) +
   scale_fill_gradient2(low = "red", mid = "white", high = "#009bda", midpoint = 0, name = "Dem Adv")+
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20))+
+  ggtitle("Democrat Return Rate Advantage")
 
-girafe(ggobj = returnRateAdvPlot, options = list(
-  opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
-))
+# girafe(ggobj = returnRateAdvPlot, options = list(
+#   opts_tooltip(css = "font-family: sans-serif; color: white; background-color: black;")
+# ))
