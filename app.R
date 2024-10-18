@@ -1,11 +1,15 @@
 library(shiny)
 library(readr)
+library(readxl)
+library(janitor)
 library(dplyr)
 library(tidyr)
 library(tidyverse)
 library(lubridate)
 library(ggplot2)
 library(plotly)
+library(ggiraph)
+library(sf)
 options(scipen=999)
 
 df <- read_csv("https://raw.githubusercontent.com/jwestreich/pa_early_vote/refs/heads/main/data.csv") %>%
@@ -42,8 +46,8 @@ ui <- fluidPage(
     tags$h3("Create your own Democrat early vote firewall"),
     tags$h4(HTML("What advantage would Democrats need from early/absentee votes to secure a win on Election Day?")),
     sliderInput("total_turnout", "What do you think the total turnout will be?", min = 5000000, max = 10000000, value = 6700000),
-    sliderInput("early_voters_pct", "What percent of total turnout do you think will be from early/absentee votes?", min = 0, max = 100, value = 25, post = "%"),
-    sliderInput("dem_election_day_pct", "What percent of votes cast in person on Election Day do you think will be won by Democrats?", min = 0, max = 100, value = 40, post = "%"),
+    sliderInput("early_voters_pct", "What percent of total turnout do you think will be from early/absentee votes?", min = 0, max = 100, value = 30, post = "%"),
+    sliderInput("dem_election_day_pct", "What percent of votes cast in person on Election Day do you think will be won by Democrats?", min = 0, max = 100, value = 45, post = "%"),
     
     tags$h3(HTML(paste0("In those conditions, Democrats will need an advantage of", textOutput("firewall_needed"), " early and absentee votes to secure a win on Election Day")), style = "font-size: 24px;"),
     
@@ -190,6 +194,3 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
-
-
-#total_turnout * (1 - early_voters_pct) * (1 - 2 * dem_election_day_pct) = early vote firewall needed
