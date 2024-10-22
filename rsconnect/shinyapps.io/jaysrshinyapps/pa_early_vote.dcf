@@ -5,7 +5,7 @@ account: jaysrshinyapps
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12986893
-bundleId: 9240458
+bundleId: 9250605
 url: https://jaysrshinyapps.shinyapps.io/pa_early_vote/
 version: 1
 asMultiple: FALSE
